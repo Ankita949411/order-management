@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  ORDER_RECEIVED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model MenuItem {
+  id          String      @id @default(uuid()) @db.Uuid
+  name        String      @unique @db.VarChar(120)
+  description String      @db.Text
+  priceCents  Int         @map("price_cents")
+  imageUrl    String      @map("image_url") @db.Text
+  isAvailable Boolean     @default(true) @map("is_available")
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  orderItems  OrderItem[]
+
+  @@index([isAvailable])
+  @@map("menu_items")
+}
+
+model Customer {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @db.VarChar(120)
+  phone     String   @db.VarChar(32)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  orders    Order[]
+
+  @@index([phone])
+  @@map("customers")
+}
+
+model Order {
+  id              String               @id @default(uuid()) @db.Uuid
+  customerId      String               @map("customer_id") @db.Uuid
+  deliveryName    String               @map("delivery_name") @db.VarChar(120)
+  deliveryPhone   String               @map("delivery_phone") @db.VarChar(32)
+  deliveryAddress String               @map("delivery_address") @db.Text
+  status          OrderStatus          @default(ORDER_RECEIVED)
+  subtotalCents   Int                  @map("subtotal_cents")
+  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime             @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  customer        Customer             @relation(fields: [customerId], references: [id])
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id              String   @id @default(uuid()) @db.Uuid
+  orderId         String   @map("order_id") @db.Uuid
+  menuItemId      String   @map("menu_item_id") @db.Uuid
+  itemName        String   @map("item_name") @db.VarChar(120)
+  itemDescription String   @map("item_description") @db.Text
+  itemPriceCents  Int      @map("item_price_cents")
+  quantity        Int
+  lineTotalCents  Int      @map("line_total_cents")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem        MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@unique([orderId, menuItemId])
+  @@index([orderId])
+  @@index([menuItemId])
+  @@map("order_items")
+}
+
+model OrderStatusHistory {
+  id        String      @id @default(uuid()) @db.Uuid
+  orderId   String      @map("order_id") @db.Uuid
+  status    OrderStatus
+  changedAt DateTime    @default(now()) @map("changed_at") @db.Timestamptz(6)
+
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+  @@index([changedAt])
+  @@map("order_status_history")
+}

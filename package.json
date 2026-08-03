@@ -1,0 +1,28 @@
+{
+  "name": "order-management",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "build": "npm run build -w packages/shared && npm run build -w server && npm run build -w client",
+    "build:client": "npm run build -w client",
+    "build:server": "npm run build -w server",
+    "test": "npm test -w server -- --runInBand && npm test -w client",
+    "test:client": "npm test -w client",
+    "test:server": "npm test -w server -- --runInBand",
+    "lint": "npm run lint -w server && npm run lint -w client",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run prisma:migrate -w server",
+    "db:seed": "npm run prisma:seed -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.4"
+  }
+}
