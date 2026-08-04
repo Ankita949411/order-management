@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build:client": "npm run build -w @order-management/shared && vite build",
     "build": "npm run build -w @order-management/shared && tsc -b && vite build",
     "lint": "oxlint",
     "test": "vitest run",
