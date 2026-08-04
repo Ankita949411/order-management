@@ -1,4 +1,4 @@
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus } from '@order-management/shared';
 import { env } from '../config/env';
 import { logger } from '../config/logger';
 import { OrderRepository } from '../repositories/order.repository';

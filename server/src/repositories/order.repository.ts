@@ -1,5 +1,6 @@
-import { OrderStatus, Prisma, PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { prisma } from '../config/prisma';
+import { OrderStatus, type OrderStatus as OrderStatusType } from '@order-management/shared';
 import { OrderRepositoryPort, OrderWithDetails } from './order.repository.interface';
 
 type TransactionClient = Prisma.TransactionClient;
@@ -68,7 +69,7 @@ export class OrderRepository implements OrderRepositoryPort {
     });
   }
 
-  async updateStatus(id: string, status: OrderStatus) {
+  async updateStatus(id: string, status: OrderStatusType) {
     return this.db.$transaction(async (tx) => {
       await tx.order.update({
         where: { id },

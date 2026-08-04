@@ -1,4 +1,4 @@
-import { OrderStatus } from '@prisma/client';
+import type { OrderStatus } from '@order-management/shared';
 import { Server, Socket } from 'socket.io';
 import { z } from 'zod';
 import { logger } from '../config/logger';

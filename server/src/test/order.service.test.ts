@@ -1,6 +1,6 @@
-import { OrderStatus } from '@prisma/client';
 import { AppError } from '../middleware/error-handler';
 import { OrderService } from '../services/order.service';
+import { OrderStatus } from '@order-management/shared';
 
 const createOrderRepository = () => ({
   create: jest.fn(),

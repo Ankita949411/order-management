@@ -1,4 +1,4 @@
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus } from '@order-management/shared';
 import { AppError } from '../middleware/error-handler';
 import { MenuRepository } from '../repositories/menu.repository';
 import { MenuRepositoryPort } from '../repositories/menu.repository.interface';

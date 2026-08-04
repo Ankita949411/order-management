@@ -1,5 +1,5 @@
-import { OrderStatus } from '@prisma/client';
 import { createOrderSchema, updateOrderStatusSchema } from '../schemas/order.schema';
+import { OrderStatus } from '@order-management/shared';
 
 describe('order schemas', () => {
   it('accepts a valid create order payload', () => {

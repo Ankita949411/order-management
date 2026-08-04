@@ -19,12 +19,15 @@ export type MenuItem = {
   updatedAt: string;
 };
 
-export type OrderStatus =
-  | 'ORDER_RECEIVED'
-  | 'PREPARING'
-  | 'OUT_FOR_DELIVERY'
-  | 'DELIVERED'
-  | 'CANCELLED';
+export const OrderStatus = {
+  ORDER_RECEIVED: 'ORDER_RECEIVED',
+  PREPARING: 'PREPARING',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+} as const;
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export type CreateOrderRequest = {
   customer: {

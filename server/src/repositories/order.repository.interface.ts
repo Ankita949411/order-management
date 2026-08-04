@@ -1,4 +1,5 @@
-import { OrderStatus, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import type { OrderStatus } from '@order-management/shared';
 import type { CreateOrderData } from './order.repository';
 
 export type OrderWithDetails = Prisma.OrderGetPayload<{

@@ -1,8 +1,8 @@
-import { OrderStatus } from '@prisma/client';
 import request from 'supertest';
 import { createApp } from '../app';
 import { prisma } from '../config/prisma';
 import { orderStatusSchedulerService } from '../services/order-status-scheduler.service';
+import { OrderStatus } from '@order-management/shared';
 
 jest.mock('../config/prisma', () => ({
   prisma: {
@@ -77,7 +77,7 @@ describe('order management API', () => {
 
   it('POST /api/orders creates an order', async () => {
     jest.mocked(prisma.menuItem.findMany).mockResolvedValue([menuItem]);
-    jest.mocked(prisma.$transaction).mockImplementation(async (callback) =>
+    jest.mocked(prisma.$transaction).mockImplementation(async (callback: (tx: never) => unknown) =>
       callback({
         customer: {
           create: jest.fn().mockResolvedValue(order.customer)
@@ -126,7 +126,7 @@ describe('order management API', () => {
 
   it('PATCH /api/orders/:id/status updates an order status', async () => {
     jest.mocked(prisma.order.findUnique).mockResolvedValue(order);
-    jest.mocked(prisma.$transaction).mockImplementation(async (callback) =>
+    jest.mocked(prisma.$transaction).mockImplementation(async (callback: (tx: never) => unknown) =>
       callback({
         order: {
           update: jest.fn().mockResolvedValue({}),
