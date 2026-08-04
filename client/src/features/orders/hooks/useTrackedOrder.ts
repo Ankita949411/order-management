@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import type { OrderStatus } from '@order-management/shared';
+import type { Order, OrderStatus, OrderStatusHistory } from '@order-management/shared';
 import { useOrder } from '../../../hooks/useOrder';
 import { useOrderTracking } from '../../../hooks/useOrderTracking';
 
@@ -14,13 +14,13 @@ export function useTrackedOrder(orderId?: string) {
       return;
     }
 
-    setOrder((currentOrder) => {
+    setOrder((currentOrder: Order | null) => {
       if (!currentOrder) {
         return currentOrder;
       }
 
       const alreadyHasStatus = currentOrder.statusHistory.some(
-        (entry) => entry.status === realtimeStatus
+        (entry: OrderStatusHistory) => entry.status === realtimeStatus
       );
 
       return {
