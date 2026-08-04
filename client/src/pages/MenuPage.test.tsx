@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as menuApi from '../api/menuApi';
@@ -37,16 +37,24 @@ describe('MenuPage', () => {
     await userEvent.click(screen.getByRole('button', { name: /add to cart/i }));
 
     await waitFor(() => {
-      expect(screen.getByText('1')).toBeInTheDocument();
+      expect(getQuantityText()).toHaveTextContent('1');
     });
 
     await userEvent.click(screen.getByRole('button', { name: /increase margherita pizza quantity/i }));
-    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(getQuantityText()).toHaveTextContent('2');
 
     await userEvent.click(screen.getByRole('button', { name: /decrease margherita pizza quantity/i }));
-    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(getQuantityText()).toHaveTextContent('1');
 
     await userEvent.click(screen.getByRole('button', { name: /decrease margherita pizza quantity/i }));
     expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
   });
 });
+
+function getQuantityText() {
+  const decreaseButton = screen.getByRole('button', {
+    name: /decrease margherita pizza quantity/i
+  });
+
+  return within(decreaseButton.parentElement!).getByText(/\d+/);
+}
