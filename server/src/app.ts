@@ -12,7 +12,10 @@ export function createApp() {
   const app = express();
 
   app.use(helmet());
-  app.use(cors(corsOptions));
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
   app.use(
     pinoHttp({
       logger
