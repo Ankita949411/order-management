@@ -1,6 +1,8 @@
 import { OrderStatus } from '@prisma/client';
 import { z } from 'zod';
 
+const usPhoneRegex = /^(?:\+1[\s.-]?)?(?:\([2-9]\d{2}\)|[2-9]\d{2})[\s.-]?[2-9]\d{2}[\s.-]?\d{4}$/;
+
 export const orderIdParamsSchema = z.object({
   id: z.string().uuid('Order id must be a valid UUID')
 });
@@ -8,7 +10,10 @@ export const orderIdParamsSchema = z.object({
 export const createOrderSchema = z.object({
   customer: z.object({
     name: z.string().trim().min(2).max(120),
-    phone: z.string().trim().min(7).max(32),
+    phone: z
+      .string()
+      .trim()
+      .regex(usPhoneRegex, 'Phone number must be a valid US phone number'),
     address: z.string().trim().min(10).max(500)
   }),
   items: z

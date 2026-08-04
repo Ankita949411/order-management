@@ -21,7 +21,7 @@ const order: Order = {
   id: '550e8400-e29b-41d4-a716-446655440001',
   customerId: '550e8400-e29b-41d4-a716-446655440002',
   deliveryName: 'Ankit Sharma',
-  deliveryPhone: '9876543210',
+  deliveryPhone: '(415) 555-2671',
   deliveryAddress: '123 Main Street, Bengaluru',
   status: 'ORDER_RECEIVED',
   subtotalCents: 899,

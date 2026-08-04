@@ -56,7 +56,7 @@ describe('OrderService', () => {
     await service.createOrder({
       customer: {
         name: 'Ankit Sharma',
-        phone: '9876543210',
+        phone: '(415) 555-2671',
         address: '123 Main Street, Bengaluru'
       },
       items: [
@@ -70,7 +70,7 @@ describe('OrderService', () => {
     expect(orderRepository.create).toHaveBeenCalledWith({
       customer: {
         name: 'Ankit Sharma',
-        phone: '9876543210',
+        phone: '(415) 555-2671',
         address: '123 Main Street, Bengaluru'
       },
       subtotalCents: 1798,
@@ -111,7 +111,7 @@ describe('OrderService', () => {
       service.createOrder({
         customer: {
           name: 'Ankit Sharma',
-          phone: '9876543210',
+          phone: '(415) 555-2671',
           address: '123 Main Street, Bengaluru'
         },
         items: [
@@ -154,7 +154,7 @@ describe('OrderService', () => {
     await service.createOrder({
       customer: {
         name: 'Ankit Sharma',
-        phone: '9876543210',
+        phone: '(415) 555-2671',
         address: '123 Main Street, Bengaluru'
       },
       items: [

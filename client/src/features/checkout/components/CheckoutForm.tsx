@@ -30,6 +30,7 @@ export function CheckoutForm({
         </Typography>
         <TextField
           label="Name"
+          placeholder="e.g. Alex Johnson"
           value={values.name}
           error={Boolean(errors.name)}
           helperText={errors.name}
@@ -39,6 +40,7 @@ export function CheckoutForm({
         />
         <TextField
           label="Phone"
+          placeholder="e.g. (415) 555-2671"
           value={values.phone}
           error={Boolean(errors.phone)}
           helperText={errors.phone}
@@ -48,6 +50,7 @@ export function CheckoutForm({
         />
         <TextField
           label="Address"
+          placeholder="e.g. 123 Market Street, San Francisco, CA 94103"
           value={values.address}
           error={Boolean(errors.address)}
           helperText={errors.address}

@@ -39,7 +39,7 @@ const order = {
   id: '550e8400-e29b-41d4-a716-446655440001',
   customerId: '550e8400-e29b-41d4-a716-446655440002',
   deliveryName: 'Ankit Sharma',
-  deliveryPhone: '9876543210',
+  deliveryPhone: '(415) 555-2671',
   deliveryAddress: '123 Main Street, Bengaluru',
   status: OrderStatus.ORDER_RECEIVED,
   subtotalCents: 899,
@@ -48,7 +48,7 @@ const order = {
   customer: {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Ankit Sharma',
-    phone: '9876543210',
+    phone: '(415) 555-2671',
     createdAt: new Date('2026-08-03T08:00:00.000Z'),
     updatedAt: new Date('2026-08-03T08:00:00.000Z')
   },
@@ -97,7 +97,7 @@ describe('order management API', () => {
       .send({
         customer: {
           name: 'Ankit Sharma',
-          phone: '9876543210',
+          phone: '(415) 555-2671',
           address: '123 Main Street, Bengaluru'
         },
         items: [{ menuItemId: menuItem.id, quantity: 1 }]
@@ -114,7 +114,7 @@ describe('order management API', () => {
       .send({
         customer: {
           name: '',
-          phone: '12',
+          phone: '12345',
           address: ''
         },
         items: []

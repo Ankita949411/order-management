@@ -24,7 +24,7 @@ const createdOrder: Order = {
   id: '550e8400-e29b-41d4-a716-446655440001',
   customerId: '550e8400-e29b-41d4-a716-446655440002',
   deliveryName: 'Ankit Sharma',
-  deliveryPhone: '9876543210',
+  deliveryPhone: '(415) 555-2671',
   deliveryAddress: '123 Main Street, Bengaluru',
   status: 'ORDER_RECEIVED',
   subtotalCents: 899,
@@ -64,7 +64,7 @@ describe('CheckoutPage', () => {
     fireEvent.click(screen.getByRole('button', { name: /place order/i }));
 
     expect(await screen.findByText(/name must be at least 2 characters/i)).toBeInTheDocument();
-    expect(screen.getByText(/phone number must be at least 7 digits/i)).toBeInTheDocument();
+    expect(screen.getByText(/phone number must be a valid us phone number/i)).toBeInTheDocument();
     expect(screen.getByText(/address must be at least 10 characters/i)).toBeInTheDocument();
   });
 
@@ -73,7 +73,7 @@ describe('CheckoutPage', () => {
     renderCheckoutWithCart(clearCart);
 
     fireEvent.change(screen.getByLabelText(/name/i), { target: { value: 'Ankit Sharma' } });
-    fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: '9876543210' } });
+    fireEvent.change(screen.getByLabelText(/phone/i), { target: { value: '(415) 555-2671' } });
     fireEvent.change(screen.getByLabelText(/address/i), {
       target: { value: '123 Main Street, Bengaluru' }
     });
@@ -83,7 +83,7 @@ describe('CheckoutPage', () => {
       expect(orderApi.createOrder).toHaveBeenCalledWith({
         customer: {
           name: 'Ankit Sharma',
-          phone: '9876543210',
+          phone: '(415) 555-2671',
           address: '123 Main Street, Bengaluru'
         },
         items: [{ menuItemId: cartItem.menuItem.id, quantity: 1 }]
