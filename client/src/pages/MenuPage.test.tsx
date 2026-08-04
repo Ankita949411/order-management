@@ -39,5 +39,14 @@ describe('MenuPage', () => {
     await waitFor(() => {
       expect(screen.getByText('1')).toBeInTheDocument();
     });
+
+    await userEvent.click(screen.getByRole('button', { name: /increase margherita pizza quantity/i }));
+    expect(screen.getByText('2')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /decrease margherita pizza quantity/i }));
+    expect(screen.getByText('1')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('button', { name: /decrease margherita pizza quantity/i }));
+    expect(screen.getByRole('button', { name: /add to cart/i })).toBeInTheDocument();
   });
 });

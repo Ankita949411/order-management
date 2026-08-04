@@ -8,7 +8,7 @@ import { useMenu } from '../hooks/useMenu';
 
 export function MenuPage() {
   const { data: menuItems, error, isLoading } = useMenu();
-  const { addItem } = useCart();
+  const { addItem, items: cartItems, updateQuantity } = useCart();
 
   if (isLoading) {
     return <LoadingState />;
@@ -35,7 +35,14 @@ export function MenuPage() {
         <Grid container spacing={3}>
           {menuItems.map((item) => (
             <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4 }}>
-              <MenuItemCard item={item} onAddToCart={addItem} />
+              <MenuItemCard
+                item={item}
+                quantity={
+                  cartItems.find((cartItem) => cartItem.menuItem.id === item.id)?.quantity ?? 0
+                }
+                onAddToCart={addItem}
+                onUpdateQuantity={updateQuantity}
+              />
             </Grid>
           ))}
         </Grid>

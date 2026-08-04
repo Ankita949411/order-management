@@ -1,4 +1,6 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import type { MenuItem } from '@order-management/shared';
 import {
   Button,
@@ -7,6 +9,7 @@ import {
   CardContent,
   CardMedia,
   Chip,
+  IconButton,
   Stack,
   Typography
 } from '@mui/material';
@@ -14,10 +17,17 @@ import { formatCurrency } from '../../../utils/formatCurrency';
 
 type MenuItemCardProps = {
   item: MenuItem;
+  quantity: number;
   onAddToCart: (item: MenuItem) => void;
+  onUpdateQuantity: (menuItemId: string, quantity: number) => void;
 };
 
-export function MenuItemCard({ item, onAddToCart }: MenuItemCardProps) {
+export function MenuItemCard({
+  item,
+  quantity,
+  onAddToCart,
+  onUpdateQuantity
+}: MenuItemCardProps) {
   return (
     <Card
       variant="outlined"
@@ -52,14 +62,46 @@ export function MenuItemCard({ item, onAddToCart }: MenuItemCardProps) {
         </Typography>
       </CardContent>
       <CardActions sx={{ px: 2, pb: 2 }}>
-        <Button
-          fullWidth
-          variant="contained"
-          startIcon={<AddShoppingCartIcon />}
-          onClick={() => onAddToCart(item)}
-        >
-          Add to Cart
-        </Button>
+        {quantity > 0 ? (
+          <Stack
+            direction="row"
+            sx={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              border: 1,
+              borderColor: 'divider',
+              borderRadius: 1,
+              px: 1,
+              py: 0.5
+            }}
+          >
+            <IconButton
+              aria-label={`Decrease ${item.name} quantity`}
+              color="primary"
+              onClick={() => onUpdateQuantity(item.id, quantity - 1)}
+            >
+              <RemoveIcon />
+            </IconButton>
+            <Typography sx={{ fontWeight: 700 }}>{quantity}</Typography>
+            <IconButton
+              aria-label={`Increase ${item.name} quantity`}
+              color="primary"
+              onClick={() => onUpdateQuantity(item.id, quantity + 1)}
+            >
+              <AddIcon />
+            </IconButton>
+          </Stack>
+        ) : (
+          <Button
+            fullWidth
+            variant="contained"
+            startIcon={<AddShoppingCartIcon />}
+            onClick={() => onAddToCart(item)}
+          >
+            Add to Cart
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
