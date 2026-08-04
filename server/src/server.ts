@@ -25,13 +25,25 @@ httpServer.listen(env.PORT, () => {
   logger.info(`API server listening on port ${env.PORT}`);
 });
 
+let isShuttingDown = false;
+
 async function shutdown(signal: string) {
+  if (isShuttingDown) {
+    return;
+  }
+
+  isShuttingDown = true;
   logger.info({ signal }, 'Shutting down server');
   orderStatusSchedulerService.stopAll();
   io.close();
-  httpServer.close(async () => {
+
+  httpServer.close(async (error) => {
+    if (error) {
+      logger.error({ error }, 'Error while closing HTTP server');
+      process.exitCode = 1;
+    }
+
     await prisma.$disconnect();
-    process.exit(0);
   });
 }
 
