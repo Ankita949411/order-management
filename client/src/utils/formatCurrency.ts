@@ -1,7 +1,8 @@
 export function formatCurrency(priceCents: number) {
-  return new Intl.NumberFormat('en-IN', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(priceCents / 100);
 }

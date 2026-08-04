@@ -263,28 +263,6 @@ npm run dev:client
 
 A root [.env.example](./.env.example) is provided as a single reference for both apps. The backend and frontend still load their own environment files from `server/.env` and `client/.env`.
 
-### Backend
-
-```env
-NODE_ENV=development
-PORT=4000
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/order_management?schema=public"
-CORS_ORIGIN=http://localhost:5173,https://yourdomain.com
-LOG_LEVEL=info
-ORDER_STATUS_UPDATE_INTERVAL_MS=5000
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=300
-ORDER_CREATE_RATE_LIMIT_WINDOW_MS=900000
-ORDER_CREATE_RATE_LIMIT_MAX_REQUESTS=20
-```
-
-### Frontend
-
-```env
-VITE_API_BASE_URL=http://localhost:4000/api
-VITE_SOCKET_URL=http://localhost:4000
-```
-
 ## API Documentation
 
 API request and response types are centralized in `packages/shared` and consumed by the frontend. This reduces frontend/backend contract drift while keeping the backend implementation independent from React.
